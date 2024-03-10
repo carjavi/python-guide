@@ -88,6 +88,21 @@ Requirements
 ```
 
 ## En construcción 
+
+manejo de error python: 
+https://controlautomaticoeducacion.com/python-desde-cero/manejo-de-errores-en-python/
+
+```
+try:
+    #Some code
+except:
+    #Executed if error in the try block
+else:
+    # execute if no exception
+finally:
+    #some code .... (always executed)
+```
+
 ```
 salir de python 
 
@@ -168,6 +183,47 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
+
+joystick python
+```
+joystick.py 
+
+while True:
+    events = inputs.get_gamepad()
+    for event in events:
+        print(event.ev_type, event.code, event.state)
+
+event.ev_type --> Absolute o Sync
+event.code --> ABS_HAT0Y
+
+if event.code == 'BTN_SOUTH' and event.state == 1:
+  print('Celebrate!')
+
+* botones
+Key BTN_SOUTH
+
+
+Absolute ABS_RZ
+Absolute ABS_HAT0Y
+
+*palanca analoguica izquierda
+palanca analogica abajo derecha
+
+```
+```
+
+import inputs
+
+while True:
+    events = inputs.get_gamepad()
+    for event in events:
+        print(event.ev_type, event.code, event.state)
+        if event.code == 'BTN_SOUTH' and event.state == 1:
+            print('Boton X')
+```
+
+https://learn.robotical.io/activity/control-your-marty-with-a-gamepad-using-python-
 
 <br>
 
