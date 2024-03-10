@@ -8,6 +8,23 @@
 
 <br>
 
+# Table of contents
+- [Table of contents](#table-of-contents)
+- [Install on RPi](#install-on-rpi)
+  - [Install the required build-tools](#install-the-required-build-tools)
+- [Instalando la version mas actualizada desde el sitio oficial](#instalando-la-version-mas-actualizada-desde-el-sitio-oficial)
+- [Install on Ubuntu](#install-on-ubuntu)
+  - [Install Supporting Software](#install-supporting-software)
+  - [Upgrade pip](#upgrade-pip)
+  - [Simple comments (sample)](#simple-comments-sample)
+  - [En construcción](#en-construcción)
+- [Como forzar la salida en consola en una misma linea](#como-forzar-la-salida-en-consola-en-una-misma-linea)
+- [Read Keyboard](#read-keyboard)
+- [Read Gamepad](#read-gamepad)
+- [python-guide](#python-guide)
+  
+<br>
+
 # Install on RPi
 Find the latest Python version available
 
@@ -49,7 +66,7 @@ pip -V
 sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget
 ```
 
-# Upgrade pip
+## Upgrade pip
 ```
 python -m pip install --upgrade pip 
 sudo python3 -m pip install --upgrade pip
@@ -70,7 +87,7 @@ Requirements
 """   
 ```
 
-# En construcción 
+## En construcción 
 ```
 salir de python 
 
@@ -84,6 +101,20 @@ Ctrl + C debe estar programad para que funcione
 def main():
 if __name__ == "__main__":
     main()
+```
+
+
+# Como forzar la salida en consola en una misma linea
+sample:
+```
+import time
+
+def print_and_clear():
+    for i in range(25):
+        print(f"Numero: {i}" , end = "\r")
+        time.sleep(0.5)
+        
+print_and_clear()
 ```
 
 
