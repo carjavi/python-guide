@@ -15,7 +15,9 @@
 - [Instalando la version mas actualizada desde el sitio oficial](#instalando-la-version-mas-actualizada-desde-el-sitio-oficial)
 - [Install on Ubuntu](#install-on-ubuntu)
   - [Install Supporting Software](#install-supporting-software)
-  - [Upgrade pip](#upgrade-pip)
+- [Upgrade pip](#upgrade-pip)
+- [Indentación python](#indentación-python)
+  - [vscode](#vscode)
   - [Simple comments (sample)](#simple-comments-sample)
   - [En construcción](#en-construcción)
 - [Como forzar la salida en consola en una misma linea](#como-forzar-la-salida-en-consola-en-una-misma-linea)
@@ -66,11 +68,15 @@ pip -V
 sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget
 ```
 
-## Upgrade pip
+# Upgrade pip
 ```
 python -m pip install --upgrade pip 
 sudo python3 -m pip install --upgrade pip
 ```
+
+# Indentación python
+## vscode
+indent a whole block manually: select the whole block, and then click ```Tab```. If you want to indent backward, you do it with ```Shift+Tab```. That's it, and I think that can be useful in several places.
 
 ## Simple comments (sample)
 ```
