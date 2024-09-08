@@ -18,6 +18,15 @@
 - [Upgrade pip](#upgrade-pip)
 - [Indentación python](#indentación-python)
   - [vscode](#vscode)
+  - [Summary coomands Python](#summary-coomands-python)
+  - [Check environment variables](#check-environment-variables)
+  - [Reinstall a package](#reinstall-a-package)
+  - [Update package](#update-package)
+  - [remueve package](#remueve-package)
+  - [See package version](#see-package-version)
+  - [Install a specific version of a package](#install-a-specific-version-of-a-package)
+  - [Install a smaller package than the current one](#install-a-smaller-package-than-the-current-one)
+  - [Clear the screen after each message is printed.](#clear-the-screen-after-each-message-is-printed)
   - [Simple comments (sample)](#simple-comments-sample)
   - [En construcción](#en-construcción)
 - [Como forzar la salida en consola en una misma linea](#como-forzar-la-salida-en-consola-en-una-misma-linea)
@@ -78,6 +87,60 @@ sudo python3 -m pip install --upgrade pip
 ## vscode
 indent a whole block manually: select the whole block, and then click ```Tab```. If you want to indent backward, you do it with ```Shift+Tab```. That's it, and I think that can be useful in several places.
 
+<br>
+
+## Summary coomands Python 
+
+## Check environment variables
+```
+python -c "import os; print('PYTHONPATH:', os.environ.get('PYTHONPATH')); print('PATH:', os.environ.get('PATH'))"
+```
+respuesta en RPi:
+```
+PYTHONPATH: None
+PATH: /home/carjavi/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games
+```
+
+## Reinstall a package
+```python
+pip install --force-reinstall package_name
+```
+
+## Update package
+```python
+pip install package_name --upgrade
+```
+
+## remueve package
+```python
+pip3 uninstall package_name
+python3 -m pip uninstall package_name
+```
+
+## See package version
+```python
+python -c "import package_name; print(package_name.__version__)"
+```
+
+## Install a specific version of a package
+```python
+pip install package_name==2.1.1
+python3 -m pip install package_name==0.16.0
+```
+
+## Install a smaller package than the current one
+```python
+pip3 install package_name<1 # se necesita una libreria menor a 1.0.0
+```
+
+
+## Clear the screen after each message is printed. 
+```python
+import time
+print(i, end='\r')  --> probar
+time.sleep(1)
+```
+
 ## Simple comments (sample)
 ```
 """
@@ -92,6 +155,8 @@ Requirements
     - IP4v needed select unused port number
 """   
 ```
+
+<br>
 
 ## En construcción 
 
