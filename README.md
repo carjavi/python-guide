@@ -11,16 +11,20 @@
 # Table of contents
 - [Table of contents](#table-of-contents)
 - [Install on RPi](#install-on-rpi)
-  - [Install the required build-tools](#install-the-required-build-tools)
-- [Instalando la version mas actualizada desde el sitio oficial](#instalando-la-version-mas-actualizada-desde-el-sitio-oficial)
+- [Install on Windows](#install-on-windows)
+  - [Install PIP en Windows](#install-pip-en-windows)
 - [Install on Ubuntu](#install-on-ubuntu)
-  - [Install Supporting Software](#install-supporting-software)
 - [Upgrade pip](#upgrade-pip)
 - [Indentación python](#indentación-python)
   - [vscode](#vscode)
   - [Summary coomands Python](#summary-coomands-python)
   - [Check environment variables](#check-environment-variables)
-  - [Reinstall a package](#reinstall-a-package)
+  - [Reinstall a package (Para reinstalar completamente un paquete)](#reinstall-a-package-para-reinstalar-completamente-un-paquete)
+  - [Para buscar PyPI para un paquete particular:](#para-buscar-pypi-para-un-paquete-particular)
+  - [Para ver detalles sobre un paquete instalado:](#para-ver-detalles-sobre-un-paquete-instalado)
+  - [Para enumerar todos los paquetes desactualizados:](#para-enumerar-todos-los-paquetes-desactualizados)
+  - [Para actualizar un paquete desactualizado:](#para-actualizar-un-paquete-desactualizado)
+  - [Para deshacerse completamente de un paquete:](#para-deshacerse-completamente-de-un-paquete)
   - [Update package](#update-package)
   - [remueve package](#remueve-package)
   - [See package version](#see-package-version)
@@ -37,51 +41,98 @@
 <br>
 
 # Install on RPi
-Find the latest Python version available
+Find the latest Python version: https://raspberrytips.com/install-latest-python-raspberry-pi/
 
-## Install the required build-tools
+``` Option 1 ``` <br>
+
+instala python & pip a la ultima version 
+```python
+sudo apt update && sudo apt upgrade -y && sudo apt-get install python3-pip && pip install -U pip
 ```
+
+``` Option 2``` <br>
+
+python
+```python
+sudo apt update && sudo apt upgrade -y && sudo apt install python3 idle3
+```
+pip (Python 2.x)-> python / (Python 3.x)-> python3
+```python
+sudo apt-get install python3-pip -y && sudo python3 -m pip install --upgrade pip
+```
+
+```Install the required build-tools```
+```python
 sudo apt-get install build-essential tk-dev libncurses5-dev libncursesw5-dev libreadline6-dev libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev libffi-dev
 ```
-
+```python
+python --version
+python3 -V
+pip -V
 ```
-sudo apt update && sudo apt upgrade -y
-sudo apt install python3 idle3
+
+<br>
+
+# Install on Windows
+Download the latest version for Windows: https://www.python.org/downloads/
+
+## Install PIP en Windows
+Las siguientes instrucciones deberían funcionar en Windows 7, Windows 8.1 y Windows 10:
+
+Descargue el script del instalador get-pip.py (https://pip.pypa.io/en/stable/installation/). Si estás en Python 3.2, necesitarás esta versión de get-pip.py. En caso de tener Python 3.3 o 3.4 usar estas versiones de PiP correspondientemente Python 3.3 get-pip.py o Python 3.4 get-pip.py. De cualquier manera, haga clic derecho en el enlace y seleccione Guardar como y guárdelo en cualquier carpeta del pc, como su carpeta de Descargas.
+
+Abra el símbolo del sistema y navegue hasta el archivo get-pip.py.
+
+Ejecute el siguiente comando: 
+```python
+python get-pip.py
 ```
 
-# Instalando la version mas actualizada desde el sitio oficial
-more information: https://raspberrytips.com/install-latest-python-raspberry-pi/
+📝 Nota: Ejecutar la terminal (CMD o Powershell) con privilegios de administrador
 
+actualizar PIP en windows: 
+```python
+python -m pip install -U pip
+```
+```python
+python --version
+python3 -V
+pip -V
+```
+
+<br>
 
 # Install on Ubuntu
 
-```
+```python
 sudo apt update
 ```
 
-```
+```python
 sudo apt install python3
 ```
-```
+```python
 sudo apt install python3.12
 ```
-
+Install Supporting Software
+```python
+sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget
 ```
+
+```python
 python --version
 python3 --version
 pip -V
 ```
-
-## Install Supporting Software
-```
-sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget
-```
+<br>
 
 # Upgrade pip
-```
+```python
 python -m pip install --upgrade pip 
 sudo python3 -m pip install --upgrade pip
 ```
+
+<br>
 
 # Indentación python
 ## vscode
@@ -92,7 +143,7 @@ indent a whole block manually: select the whole block, and then click ```Tab```.
 ## Summary coomands Python 
 
 ## Check environment variables
-```
+```python
 python -c "import os; print('PYTHONPATH:', os.environ.get('PYTHONPATH')); print('PATH:', os.environ.get('PATH'))"
 ```
 respuesta en RPi:
@@ -101,9 +152,39 @@ PYTHONPATH: None
 PATH: /home/carjavi/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games
 ```
 
-## Reinstall a package
+## Reinstall a package (Para reinstalar completamente un paquete)
 ```python
 pip install --force-reinstall package_name
+```
+
+## Para buscar PyPI para un paquete particular:
+```python
+pip search "query"
+```
+
+## Para ver detalles sobre un paquete instalado:
+```python
+pip show nombre-paquete
+```
+
+Para enumerar todos los paquetes instalados:
+```python
+pip list
+```
+
+## Para enumerar todos los paquetes desactualizados:
+```python
+pip list --outdated
+```
+
+## Para actualizar un paquete desactualizado:
+```python
+pip install nombre-paquete --upgrade
+```
+
+## Para deshacerse completamente de un paquete:
+```python
+pip uninstall nombre-paquete
 ```
 
 ## Update package
@@ -142,7 +223,7 @@ time.sleep(1)
 ```
 
 ## Simple comments (sample)
-```
+```python
 """
 This Program is for Voice less video Streaming using UDP protocol 
 -------
@@ -163,7 +244,7 @@ Requirements
 manejo de error python: 
 https://controlautomaticoeducacion.com/python-desde-cero/manejo-de-errores-en-python/
 
-```
+```python
 try:
     #Some code
 except:
@@ -174,7 +255,7 @@ finally:
     #some code .... (always executed)
 ```
 
-```
+```python
 salir de python 
 
 desde el terminal
@@ -192,7 +273,7 @@ if __name__ == "__main__":
 
 # Como forzar la salida en consola en una misma linea
 sample:
-```
+```python
 import time
 
 def print_and_clear():
@@ -206,10 +287,10 @@ print_and_clear()
 
 # Read Keyboard
 Install through pypi:
-```
+```python
 pip install inputs
 ```
-```
+```python
 """Simple example showing how to get keyboard events."""
 
 from __future__ import print_function
@@ -231,10 +312,10 @@ if __name__ == "__main__":
 
 # Read Gamepad
 Install through pypi:
-```
+```python
 pip install inputs
 ```
-```
+```python
 """Simple example showing how to get gamepad events."""
 
 from __future__ import print_function
@@ -257,7 +338,7 @@ if __name__ == "__main__":
 
 
 joystick python
-```
+```python
 joystick.py 
 
 while True:
@@ -282,7 +363,7 @@ Absolute ABS_HAT0Y
 palanca analogica abajo derecha
 
 ```
-```
+```python
 
 import inputs
 
