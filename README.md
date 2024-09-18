@@ -22,6 +22,7 @@
   - [Reinstall a package (Para reinstalar completamente un paquete)](#reinstall-a-package-para-reinstalar-completamente-un-paquete)
   - [Para buscar PyPI para un paquete particular:](#para-buscar-pypi-para-un-paquete-particular)
   - [Para ver detalles sobre un paquete instalado:](#para-ver-detalles-sobre-un-paquete-instalado)
+  - [Para enumerar todos los paquetes instalados:](#para-enumerar-todos-los-paquetes-instalados)
   - [Para enumerar todos los paquetes desactualizados:](#para-enumerar-todos-los-paquetes-desactualizados)
   - [Para actualizar un paquete desactualizado:](#para-actualizar-un-paquete-desactualizado)
   - [Para deshacerse completamente de un paquete:](#para-deshacerse-completamente-de-un-paquete)
@@ -32,6 +33,8 @@
   - [Install a smaller package than the current one](#install-a-smaller-package-than-the-current-one)
   - [Clear the screen after each message is printed.](#clear-the-screen-after-each-message-is-printed)
   - [Simple comments (sample)](#simple-comments-sample)
+- [Carrar una App python](#carrar-una-app-python)
+  - [correr comandos del sistema on python](#correr-comandos-del-sistema-on-python)
   - [En construcción](#en-construcción)
 - [Como forzar la salida en consola en una misma linea](#como-forzar-la-salida-en-consola-en-una-misma-linea)
 - [Read Keyboard](#read-keyboard)
@@ -167,7 +170,7 @@ pip search "query"
 pip show nombre-paquete
 ```
 
-Para enumerar todos los paquetes instalados:
+## Para enumerar todos los paquetes instalados:
 ```python
 pip list
 ```
@@ -239,6 +242,46 @@ Requirements
 
 <br>
 
+# Carrar una App python
+
+```sys.exit()```: Es la opción más común para finalizar un programa de manera controlada. Simplemente cierra el programa y salta al bloque finally si está presente. Termina la ejecución de forma limpia. Un valor de 0 indica que el programa terminó correctamente, mientras que cualquier valor distinto de 0 indica un error.
+
+```os._exit()```: Útil en situaciones donde se necesita salir inmediatamente, sin esperar a que se ejecuten bloques finally. Si necesitas salir inmediatamente sin pasar por los bloques finally o sin limpiar recursos, puedes usar os._exit(). Esta es una forma más abrupta de cerrar el programa.Un valor de 0 indica que el programa terminó correctamente, mientras que cualquier valor distinto de 0 indica un error.
+
+```quit() y exit(```: Estas funciones son sinónimos de sys.exit() pero están diseñadas para ser usadas principalmente en entornos interactivos, como en el intérprete de Python. Útil en el intérprete interactivo, pero no recomendado en scripts formales.
+
+```raise KeyboardInterrupt```: Si quieres simular una interrupción del usuario (Ctrl + C).
+
+> [!IMPORTANT]
+> Salir de python desde el terminal quit(). Ctrl + C debe estar programa para que funcione, sample:
+```python
+import time
+
+def main():
+    try:
+        print("Presiona Ctrl + C para salir")
+        while True:
+            time.sleep(1)  # Simulación de alguna operación
+    except KeyboardInterrupt:
+        print("\nDetención por el usuario (Ctrl + C). Saliendo...")
+
+if __name__ == "__main__":
+    main()
+```
+
+
+<br>
+
+## correr comandos del sistema on python
+sample: 
+```python
+import os
+
+os.system('sudo shutdown -h now')
+```
+
+<br>
+
 ## En construcción 
 
 manejo de error python: 
@@ -253,21 +296,6 @@ else:
     # execute if no exception
 finally:
     #some code .... (always executed)
-```
-
-```python
-salir de python 
-
-desde el terminal
-quit()
-
-Ctrl + C debe estar programad para que funcione
-
-
-
-def main():
-if __name__ == "__main__":
-    main()
 ```
 
 
