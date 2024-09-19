@@ -33,6 +33,7 @@
   - [Install a smaller package than the current one](#install-a-smaller-package-than-the-current-one)
   - [Clear the screen after each message is printed.](#clear-the-screen-after-each-message-is-printed)
   - [Simple comments (sample)](#simple-comments-sample)
+- [DEBUG code python](#debug-code-python)
 - [Carrar una App python](#carrar-una-app-python)
   - [correr comandos del sistema on python](#correr-comandos-del-sistema-on-python)
   - [En construcción](#en-construcción)
@@ -239,8 +240,36 @@ Requirements
     - IP4v needed select unused port number
 """   
 ```
+<br>
+
+# DEBUG code python 
+
+Blinking Led:
+```python
+# pip install RPi.GPIO
+
+import RPi.GPIO as GPIO
+
+
+def blinking_led(blinks,speed):
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(18, GPIO.OUT)
+    try:
+        for _ in range(blinks):
+            GPIO.output(18, GPIO.HIGH)
+            time.sleep(speed)  # Espera ms
+            GPIO.output(18, GPIO.LOW)
+            time.sleep(speed)  # Espera ms
+    finally:
+        GPIO.cleanup()  # Limpia la configuración de los pines
+
+
+if __name__ == "__main__":
+     blinking_led(5, 0.5)
+```
 
 <br>
+
 
 # Carrar una App python
 
