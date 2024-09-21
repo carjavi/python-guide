@@ -43,7 +43,6 @@
 - [Como forzar la salida en consola en una misma linea](#como-forzar-la-salida-en-consola-en-una-misma-linea)
 - [Read Keyboard](#read-keyboard)
 - [Read Gamepad](#read-gamepad)
-- [python-guide](#python-guide)
   
 <br>
 
@@ -461,5 +460,5 @@ carjavi@hotmail.com <br>
     <a href="https://instintodigital.net/" target="_blank"><img src="./img/developer.png" height="100" alt="www.instintodigital.net"></a>
 </p>
 
-# python-guide
+
 
