@@ -31,12 +31,15 @@
   - [See package version](#see-package-version)
   - [Install a specific version of a package](#install-a-specific-version-of-a-package)
   - [Install a smaller package than the current one](#install-a-smaller-package-than-the-current-one)
+- [Carrar una App python](#carrar-una-app-python)
+- [Snippets 📎📌✂️](#snippets-️)
+  - [Interpolación lineal](#interpolación-lineal)
   - [Clear the screen after each message is printed.](#clear-the-screen-after-each-message-is-printed)
   - [Simple comments (sample)](#simple-comments-sample)
-- [DEBUG code python](#debug-code-python)
-- [Carrar una App python](#carrar-una-app-python)
-  - [correr comandos del sistema on python](#correr-comandos-del-sistema-on-python)
-  - [En construcción](#en-construcción)
+  - [Debug with Led Bliking](#debug-with-led-bliking)
+  - [Correr comandos del sistema on python](#correr-comandos-del-sistema-on-python)
+  - [En la pantalla](#en-la-pantalla)
+  - [En construcción 🚧](#en-construcción-)
 - [Como forzar la salida en consola en una misma linea](#como-forzar-la-salida-en-consola-en-una-misma-linea)
 - [Read Keyboard](#read-keyboard)
 - [Read Gamepad](#read-gamepad)
@@ -217,59 +220,7 @@ python3 -m pip install package_name==0.16.0
 ```python
 pip3 install package_name<1 # se necesita una libreria menor a 1.0.0
 ```
-
-
-## Clear the screen after each message is printed. 
-```python
-import time
-print(i, end='\r')  --> probar
-time.sleep(1)
-```
-
-## Simple comments (sample)
-```python
-"""
-This Program is for Voice less video Streaming using UDP protocol 
--------
-This is a Server
-    - Run Client Code first then run Server Code
-    - Configure IP and PORT number of your Server
-    
-Requirements
-    - Outside Connection 
-    - IP4v needed select unused port number
-"""   
-```
 <br>
-
-# DEBUG code python 
-
-Blinking Led:
-```python
-# pip install RPi.GPIO
-
-import RPi.GPIO as GPIO
-
-
-def blinking_led(blinks,speed):
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(18, GPIO.OUT)
-    try:
-        for _ in range(blinks):
-            GPIO.output(18, GPIO.HIGH)
-            time.sleep(speed)  # Espera ms
-            GPIO.output(18, GPIO.LOW)
-            time.sleep(speed)  # Espera ms
-    finally:
-        GPIO.cleanup()  # Limpia la configuración de los pines
-
-
-if __name__ == "__main__":
-     blinking_led(5, 0.5)
-```
-
-<br>
-
 
 # Carrar una App python
 
@@ -301,17 +252,83 @@ if __name__ == "__main__":
 
 <br>
 
-## correr comandos del sistema on python
+
+# Snippets 📎📌✂️
+
+## Interpolación lineal
+```python
+# ADC es el valos que estoy leyendo.
+
+def map_value(x, in_min, in_max, out_min, out_max):
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
+
+# la salida sera entre 0-100, 7700 equivale a 0 y 8800 equivale a 100
+value = map_value(ADC, 7700, 8800, 0, 100)
+```
+
+## Clear the screen after each message is printed. 
+```python
+import time
+print(i, end='\r')  --> probar
+time.sleep(1)
+```
+
+## Simple comments (sample)
+```python
+"""
+This Program is for Voice less video Streaming using UDP protocol 
+-------
+This is a Server
+    - Run Client Code first then run Server Code
+    - Configure IP and PORT number of your Server
+    
+Requirements
+    - Outside Connection 
+    - IP4v needed select unused port number
+"""   
+```
+
+## Debug with Led Bliking
+
+Blinking Led:
+```python
+# pip install RPi.GPIO
+
+import RPi.GPIO as GPIO
+
+
+def blinking_led(blinks,speed):
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(18, GPIO.OUT)
+    try:
+        for _ in range(blinks):
+            GPIO.output(18, GPIO.HIGH)
+            time.sleep(speed)  # Espera ms
+            GPIO.output(18, GPIO.LOW)
+            time.sleep(speed)  # Espera ms
+    finally:
+        GPIO.cleanup()  # Limpia la configuración de los pines
+
+
+if __name__ == "__main__":
+     blinking_led(5, 0.5)
+```
+
+## Correr comandos del sistema on python
 sample: 
 ```python
 import os
 
 os.system('sudo shutdown -h now')
 ```
+## En la pantalla
+```python
+print('-' * 37) #imprime 37 veces el "-" horizontalmente
+```
 
 <br>
 
-## En construcción 
+## En construcción 🚧
 
 manejo de error python: 
 https://controlautomaticoeducacion.com/python-desde-cero/manejo-de-errores-en-python/
