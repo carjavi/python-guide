@@ -10,6 +10,9 @@
 
 # Table of contents
 - [Table of contents](#table-of-contents)
+- [Python Virtual Environment (Windows/Linux)](#python-virtual-environment-windowslinux)
+  - [Activar (estando dentro de la carpeta que contiene el venv):](#activar-estando-dentro-de-la-carpeta-que-contiene-el-venv)
+  - [Comandos](#comandos)
 - [Install on RPi](#install-on-rpi)
 - [Install on Windows](#install-on-windows)
   - [Install PIP en Windows](#install-pip-en-windows)
@@ -44,6 +47,37 @@
 - [Read Keyboard](#read-keyboard)
 - [Read Gamepad](#read-gamepad)
   
+<br>
+
+# Python Virtual Environment (Windows/Linux)
+```bash
+python3 -m venv venv # crear un entorno virtual llamado venv
+
+
+python3 -m venv --system-site-packages art-python-new # le dice a venv que, además de los paquetes que instales en tu entorno virtual, también tenga acceso a los paquetes instalados globalmente en tu sistema Python.
+```
+
+## Activar (estando dentro de la carpeta que contiene el venv):
+Linux / macOS
+```bash
+source venv/bin/activate
+```
+Windows:
+```bash
+# Desde Gitbash
+source venv/Scripts/activate
+
+# Desde el CMD
+venv\Scripts\activate
+
+# desde PowerShell
+.\venv\Scripts\Activate.ps1
+```
+
+##  Comandos
+```bash
+which python # para saber a que carpeta virtual apunta el python
+```
 <br>
 
 # Install on RPi
