@@ -12,8 +12,31 @@
 - [Table of contents](#table-of-contents)
 - [Python Virtual Environment (Windows/Linux)](#python-virtual-environment-windowslinux)
   - [Activar (estando dentro de la carpeta que contiene el venv):](#activar-estando-dentro-de-la-carpeta-que-contiene-el-venv)
-  - [Comandos](#comandos)
+  - [Comandos Importantes](#comandos-importantes)
+  - [Usar el entorno virtual sin activarlo](#usar-el-entorno-virtual-sin-activarlo)
+  - [Removing virtual environments](#removing-virtual-environments)
+- [Installing Libraries via a Requirements File](#installing-libraries-via-a-requirements-file)
+  - [Crear  requirements.txt de un entorno virtual](#crear--requirementstxt-de-un-entorno-virtual)
+  - [Checking Environment Integrity](#checking-environment-integrity)
+  - [Updating Dependencies](#updating-dependencies)
 - [Install on RPi](#install-on-rpi)
+  - [Python Virtual Environment (RPi)](#python-virtual-environment-rpi)
+  - [Automatically Running at Boot (Systemd)](#automatically-running-at-boot-systemd)
+  - [Run service](#run-service)
+  - [Stop service](#stop-service)
+  - [Automatically enabling venv at login](#automatically-enabling-venv-at-login)
+- [Troubleshooting](#troubleshooting)
+  - [Opción 1 - Invocar con sudo pasando el entorno](#opción-1---invocar-con-sudo-pasando-el-entorno)
+  - [Opción 2 - Usar rutas absolutas](#opción-2---usar-rutas-absolutas)
+- [Uso básico de Venv (Entendiendo un poco más!)](#uso-básico-de-venv-entendiendo-un-poco-más)
+  - [Crea el entorno virtual](#crea-el-entorno-virtual)
+  - [Activa el entorno virtual](#activa-el-entorno-virtual)
+  - [Utiliza el entorno virtual](#utiliza-el-entorno-virtual)
+  - [Desactivar el entorno virtual ((opcional))](#desactivar-el-entorno-virtual-opcional)
+- [Utilizar paquetes Debian en lugar de módulos Python](#utilizar-paquetes-debian-en-lugar-de-módulos-python)
+- [Regresar a los "buenos tiempos de antaño"](#regresar-a-los-buenos-tiempos-de-antaño)
+- [Múltiples entornos virtuales](#múltiples-entornos-virtuales)
+- [Install on RPi (versiones anteriores a Trixie / Bookworm)](#install-on-rpi-versiones-anteriores-a-trixie--bookworm)
 - [Install on Windows](#install-on-windows)
   - [Install PIP en Windows](#install-pip-en-windows)
 - [Install on Ubuntu](#install-on-ubuntu)
@@ -77,13 +100,259 @@ venv\Scripts\activate
 .\venv\Scripts\Activate.ps1
 ```
 
-##  Comandos
+
+##  Comandos Importantes
 ```bash
 which python # para saber a que carpeta virtual apunta el python
 ```
+
+## Usar el entorno virtual sin activarlo
+1. Activar el ***venv*** solo para ver la ruta del python 
+```bash
+source xxxxx/bin/activate
+```
+2. Vemos la ruta absoluta del python
+```bash
+which python
+```
+3. Desactivamos el entorno virtual
+```bash
+$ deactivate
+```
+1. Correr archivo python sin el entorno virtual 
+```bash
+sudo /home/pi/(path)/bin/python3 (/home/pi/file-name).py
+```
+
+sample:
+```bash
+pi@raspberrypi:~ $ sudo /home/pi/blinka/bin/python3 /home/pi/neopix_spinner.py
+```
+
+## Removing virtual environments
+```bash
+rm -rf (env-name)
+```
+<br>
+
+# Installing Libraries via a Requirements File
+Archivo ```requirements.txt``` que especifique la lista de bibliotecas y sus versiones necesarias.
+
+sample:
+```bash
+# Development libraries
+
+pytest>=6.2.4
+flake8>=3.9.2
+requests>=2.25.1
+beautifulsoup4>=4.9.3
+matplotlib>=3.4.2
+```
+
+Para instalar todas las bibliotecas enumeradas en este archivo de requisitos
+```bash
+pip install -r requirements.txt
+```
+El comando instalará iterativamente todos los paquetes de Python enumerados y sus dependencias.
+
+> :bulb: **Tip:** Puedes hacer un ***pip list*** nuevamente para asegurarte de que todo se haya instalado correctamente:
+
+## Crear  requirements.txt de un entorno virtual
+```bash
+pip freeze > requirements.txt
+```
+Creará un archivo de requisitos que especifica todos los paquetes instalados y sus versiones.
+
+## Checking Environment Integrity
+Si en algún momento desea asegurarse de que todas las dependencias del entorno estén actualizadas y sean consistentes, ejecute este comando:
+```bash
+pip check
+```
+
+## Updating Dependencies
+Para actualizar todos los paquetes de su entorno virtual a sus últimas versiones, ejecute este comando:
+```bash
+pip install --upgrade -r requirements.txt
+```
+
 <br>
 
 # Install on RPi
+Raspberry Pi OS Trixie / Bookworm ya cuentan con Python ver 3.13.5
+
+## Python Virtual Environment (RPi)
+A partir del lanzamiento de Bookworm OS para Raspberry Pi el 10 de octubre de 2023 , será obligatorio usar entornos virtuales de Python (venv) al instalar paquetes con pip. Ya no se podrá usar sudo pip . Esto causará problemas y requerirá aprender cosas nuevas. Estos sistemas operativos ya tienen python instalados
+
+> :memo: **Note:** En caso de no tener las herramientas para Python Virtual Environment, se pueden instalar:
+```bash
+sudo apt update && sudo apt upgrade
+sudo apt install python3-venv
+```
+
+## Automatically Running at Boot (Systemd)
+
+Creacion del servicio
+```bash
+sudo nano /lib/systemd/system/(name-service).service
+```
+code service:
+```bash
+[Unit]
+Description= Description
+
+[Service]
+ExecStart=/home/pi/(entorno-virtual) /home/pi/(file-name).py
+
+[Install]
+WantedBy=multi-user.target
+```
+
+> :memo: **Note:** Tenga en cuenta que sudo *no* se utiliza dentro del archivo de unidad systemd.
+
+> :memo: **Note:** Con este enfoque no es necesario "activar" el venv.
+
+
+## Run service
+```bash
+sudo systemctl enable (name-service)
+sudo systemctl start (name-service)
+```
+Este proceso debería ejecutarse cada vez que se inicie el Pi. Esto no generan mucha salida.
+
+## Stop service
+```bash
+sudo systemctl stop (name-service)
+sudo systemctl disable (name-service)
+sudo systemctl status (name-service)
+```
+
+## Automatically enabling venv at login
+
+Si usas principalmente una Raspberry Pi para ejecutar scripts de Python, activar un entorno virtual cada vez puede resultar tedioso. Al añadir la activación de venv a tu .bashrcarchivo, se activará automáticamente cada vez que inicies sesión.
+
+Por ejemplo, si ***foobarya*** se ha creado un entorno virtual con ese nombre, añade esta línea al final de tu ```.bashrcarchivo```:
+
+```bash
+source ~/foobar/bin/activate
+```
+El entorno virtual se activará junto con el mensaje modificado en cada inicio de sesión.
+
+<br>
+
+# Troubleshooting
+> :warning: **Warning:** Existen librerias que generalmente desconocen el entorno virtual en el que estan trabajando, generan errores como ```ModuleNotFoundError: No module named 'board'``` o ```Can't open /dev/mem: Permission denied```, y no se solucionan usando un ***sudo***
+
+Para solucionar esto existen 2 opciones:
+
+## Opción 1 - Invocar con sudo pasando el entorno
+Enruta python en el ambiente virtual:
+```bash
+sudo -E env PATH=$PATH python3 (/home/pi/file-name).py 
+```
+
+## Opción 2 - Usar rutas absolutas
+Usar el entorno virtual sin activarlo
+1. Activar el ***venv*** solo para ver la ruta del python 
+```bash
+source xxxxx/bin/activate
+```
+2. Vemos la ruta absoluta del python
+```bash
+which python3
+```
+3. Desactivamos el entorno virtual
+```bash
+$ deactivate
+```
+4. Usamos el entorno virtual sin activarlo
+```bash
+sudo /home/pi/(path)/bin/python3 (/home/pi/file-name).py
+```
+
+<br>
+
+
+<br>
+
+# Uso básico de Venv (Entendiendo un poco más!)
+Los pasos básicos son:
+
+Crear el entorno virtual (venv) - esto se hace una sola vez (por cada entorno virtual).
+Activar el entorno virtual (venv): esto se hace cada vez que se va a utilizar un entorno virtual.
+Usa el entorno virtual (venv): ejecuta tu código Python aquí.
+Desactivar el entorno virtual (opcional)
+
+## Crea el entorno virtual
+```bash
+python3 -m venv (nombre-entorno-virtual) # Creó una nueva carpeta con el nombre del entorno virtual y configuró una estructura de carpetas que imita la disposición que espera el intérprete de Python.
+python -m venv env --system-site-packages # acceso a los paquetes instalados globalmente en tu sistema Python.
+```
+
+## Activa el entorno virtual
+```bash
+source (nombre-entorno-virtual)/bin/activate
+```
+
+## Utiliza el entorno virtual
+Una vez activado el entorno virtual, el uso de Python se desarrolla de forma normal. La ejecución de python cualquier comando pipse realizará en el contexto del entorno virtual.
+> :memo: **Note:** Sin importar donde esta el archivo python
+```bash
+sudo -E env PATH=$PATH python3 i2samp.py # sample
+```
+
+> :memo: **Note:** Los módulos instalados con pip se colocarán en las carpetas venv locales; no se debe usar sudo .
+
+## Desactivar el entorno virtual ((opcional))
+```bash
+deactivate
+```
+> :memo: **Note:** Esto no es un comando de Linux . Este "comando" es una función de shell definida en el activatescript cuando se ejecutó originalmente. Simplemente deshace lo que hizo el script de activación.
+
+<br>
+
+# Utilizar paquetes Debian en lugar de módulos Python
+Existen dos formas generales de instalar módulos de Python:
+
+```pip``` - Esta es la herramienta específica de Python para instalar módulos de Python.
+
+<br>
+
+```apt```  - Esta es la herramienta del sistema operativo para instalar paquetes a nivel de sistema ( apt-get es generalmente lo mismo).
+
+Usar `sudo` con `apt` es correcto . De hecho, suele ser necesario, ya que los paquetes se instalarán en ubicaciones protegidas a nivel de sistema. Sin embargo, usar `sudo` con `pip` es potencialmente peligroso . Por lo tanto, instalar módulos de `pip` a nivel de sistema (mediante `sudo`) generalmente no se recomienda. No obstante, muchos módulos de Python están disponibles como paquetes del sistema operativo (Debian) . Por consiguiente, es posible y correcto instalar estos módulos de Python con `sudo apt install`.
+
+Por ejemplo, para instalar PIL/Pillow :
+```bash
+sudo apt install python3-pil
+```
+
+Esto permitirá que PIL/Pillow esté disponible para cualquier usuario que ejecute Python en la configuración. Sin embargo, los paquetes del sistema operativo generalmente serán versiones anteriores a las disponibles a través de pip. ¿Y tal vez eso no sea un problema? Tendrás que determinarlo según tu caso de uso específico.
+
+<br>
+
+# Regresar a los "buenos tiempos de antaño"
+Si te opones totalmente a los entornos virtuales (venv) y no te importa la posibilidad de dañar la configuración de Python de tu sistema, y ​​simplemente quieres seguir haciendo las cosas como antes, puedes volver a habilitar las instalaciones de pip en todo el sistema eliminando un archivo llamado EXTERNALLY-MANAGED que se encuentra en la configuración de Python del sistema. Esto es prácticamente lo mismo que usar la opción `--break-system-packages` mencionada anteriormente.
+
+Por ejemplo, en una Raspberry Pi recién arrancada con Bookworm en ejecución, el archivo se puede encontrar en:
+```bash
+/usr/lib/python3.11/EXTERNALLY-MANAGED
+```
+Así que simplemente usa sudo rm para eliminarlo:
+
+```bash
+sudo rm /usr/lib/python3.11/GESTIONADO EXTERNAMENTE
+```
+Ahora puedes instalar todo lo que quieras con sudo pip. Al menos hasta que termine corrompiendo la configuración de Python.
+
+<br>
+
+# Múltiples entornos virtuales
+
+Ten en cuenta que se pueden crear varios entornos virtuales (venv). Cada uno se convierte en una carpeta independiente con todo su contenido. Esto resulta útil para resolver conflictos entre módulos o para atender requisitos específicos. Por ejemplo, FooEditor requiere PyQt 5.9.2 *únicamente*, mientras que BarEditor requiere PyQt 5.12.1 *únicamente*. Se puede configurar un venv para cada uno y así mantener las instalaciones de los módulos de PyQt separadas.
+
+<br>
+
+# Install on RPi (versiones anteriores a Trixie / Bookworm)
 Find the latest Python version: https://raspberrytips.com/install-latest-python-raspberry-pi/
 
 ``` Option 1 ``` <br>
@@ -155,7 +424,7 @@ sudo apt update
 sudo apt install python3
 ```
 ```python
-sudo apt install python3.12
+sudo apt install python3
 ```
 Install Supporting Software
 ```python
