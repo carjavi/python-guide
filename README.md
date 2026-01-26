@@ -100,6 +100,8 @@ venv\Scripts\activate
 .\venv\Scripts\Activate.ps1
 ```
 
+> :memo: **Note:** Cuando se activa un entorno virtual, solo te activa el terminal actual, si se abre otro terminal se debera activar ese nuevo entorno en ese terminal.
+
 
 ##  Comandos Importantes
 ```bash
@@ -159,9 +161,16 @@ El comando instalará iterativamente todos los paquetes de Python enumerados y s
 
 ## Crear  requirements.txt de un entorno virtual
 ```bash
+python -m pip freeze
+```
+Retorna una lista de paquetes instalados, pero el formato de salida es el requerido por ```python -m pip install```
+
+```bash
 pip freeze > requirements.txt
 ```
-Creará un archivo de requisitos que especifica todos los paquetes instalados y sus versiones.
+Creará un archivo de requisitos que especifica todos los paquetes instalados y sus versiones. 
+
+> :memo: **Note:** Es importante mencionar que, nuevamente, por buenas prácticas de programación, los entornos nunca se suben a los repositorios de git, o de cualquier otro manejador de versiones. Por lo tanto, siempre es una excelente idea crear un archivo llamado requirements.txt en el cual almacenaremos el listado de todas las dependencias.
 
 ## Checking Environment Integrity
 Si en algún momento desea asegurarse de que todas las dependencias del entorno estén actualizadas y sean consistentes, ejecute este comando:
