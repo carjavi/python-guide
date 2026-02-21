@@ -292,11 +292,12 @@ sudo /home/pi/(path)/bin/python3 (/home/pi/file-name).py
 <br>
 
 # Create a Python Executable for Windows/Linux
-Es una herramienta que toma tu script, agrupa todas sus dependencias y crea un único archivo ejecutable. Este ejecutable se puede ejecutar con un simple doble clic, sin necesidad de tener Python instalado.
+Es una herramienta que permite empaquetar código Python en un ejecutable, agrupando todas sus dependencias. Este ejecutable se puede ejecutar con un simple doble clic, sin necesidad de tener Python instalado.
 
 ## Install
 ```bash
 pip install pyinstaller
+pip install --upgrade pyinstaller
 ```
 
 ## Estructura
