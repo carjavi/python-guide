@@ -28,6 +28,15 @@
 - [Troubleshooting](#troubleshooting)
   - [Opción 1 - Invocar con sudo pasando el entorno](#opción-1---invocar-con-sudo-pasando-el-entorno)
   - [Opción 2 - Usar rutas absolutas](#opción-2---usar-rutas-absolutas)
+- [Create a Python Executable for Windows/Linux](#create-a-python-executable-for-windowslinux)
+  - [Install](#install)
+  - [Estructura](#estructura)
+  - [Script Python con GUI (hola mundo) sample](#script-python-con-gui-hola-mundo-sample)
+  - [Generar el ejecutable](#generar-el-ejecutable)
+  - [Anclar al menú Inicio / barra de tareas](#anclar-al-menú-inicio--barra-de-tareas)
+  - [Acceso directo con nombre e icono](#acceso-directo-con-nombre-e-icono)
+  - [Incluyendo archivos de datos](#incluyendo-archivos-de-datos)
+    - [Samples aditional](#samples-aditional)
 - [Uso básico de Venv (Entendiendo un poco más!)](#uso-básico-de-venv-entendiendo-un-poco-más)
   - [Crea el entorno virtual](#crea-el-entorno-virtual)
   - [Activa el entorno virtual](#activa-el-entorno-virtual)
@@ -155,7 +164,9 @@ Para instalar todas las bibliotecas enumeradas en este archivo de requisitos
 ```bash
 pip install -r requirements.txt
 ```
-El comando instalará iterativamente todos los paquetes de Python enumerados y sus dependencias.
+El comando instalará iterativamente todos los paquetes de Python enumerados y sus dependencias. 
+
+> :memo: **Note:** Debe correrse dentro de la carpeta del entorno Virtual
 
 > :bulb: **Tip:** Puedes hacer un ***pip list*** nuevamente para asegurarte de que todo se haya instalado correctamente:
 
@@ -280,6 +291,90 @@ sudo /home/pi/(path)/bin/python3 (/home/pi/file-name).py
 
 <br>
 
+# Create a Python Executable for Windows/Linux
+Es una herramienta que toma tu script, agrupa todas sus dependencias y crea un único archivo ejecutable. Este ejecutable se puede ejecutar con un simple doble clic, sin necesidad de tener Python instalado.
+
+## Install
+```bash
+pip install pyinstaller
+```
+
+## Estructura
+```
+mi_app/
+ ├─ app.py (GUI-demo.py)
+ └─ icon.ico (favicon.ico)
+ ```
+
+## Script Python con GUI (hola mundo) sample
+GUI-demo.py
+```bash
+import tkinter as tk
+
+root = tk.Tk()
+root.title("Mi App")
+root.geometry("300x150")
+
+label = tk.Label(root, text="Hola mundo", font=("Arial", 16))
+label.pack(expand=True)
+
+root.mainloop()
+```
+
+## Generar el ejecutable
+```bash
+pyinstaller --onefile --windowed --icon=(name-icon).ico (name-file-python).py # sample
+
+pyinstaller --onefile --windowed --icon=favicon.ico GUI-demo.py.py # mi code
+```
+> :memo: **Note:** El archivo .exe se encontrará dentro de la nueva carpeta llamada dist. 
+
+Opciones:
+* --onefile → un solo .exe
+
+* --windowed → sin consola
+
+* --icon → icono del ejecutable
+
+## Anclar al menú Inicio / barra de tareas
+
+Copia app.exe a una carpeta fija (por ejemplo C:\Program Files\MiApp\).
+
+Clic derecho → Anclar a Inicio <br>
+o abre el ejecutable → clic derecho en el icono de la barra → Anclar a la barra de tareas.
+
+## Acceso directo con nombre e icono
+
+Clic derecho → Crear acceso directo
+
+Propiedades → Cambiar icono → selecciona tu .ico
+
+Ese acceso directo lo puedes anclar también.
+
+## Incluyendo archivos de datos
+En este comando, 'data\data_file.txt;data'le indica a PyInstaller que lo tome data_file.txtdel datadirectorio y lo coloque en el datadirectorio de la aplicación incluida.
+
+Comando de shell (Windows):
+```bash
+pyinstaller --onefile --add-data 'data\data_file.txt;data' app_with_data.py
+```
+Comando de shell (Linux/Mac):
+```bash
+pyinstaller --onefile --add-data 'data/data_file.txt:data' app_with_data.py
+```
+
+### Samples aditional
+```bash
+pyinstaller --onefile --add-binary 'libs\example.dll;.' tu_script.py
+```
+En este comando, 'libs\example.dll;.'se le indica a PyInstaller que lo tome example.dlldel libs directorio y lo coloque en el directorio raíz de la aplicación incluida ( .es decir, la raíz de la carpeta de distribución de su aplicación).
+
+```bash
+pyinstaller --onefile --add-binary 'libs/example.so:.' tu_script.py
+```
+Aquí, 'libs/example.so:.'le indica a PyInstaller que incluya example.so el libs directorio en la raíz de la carpeta ejecutable.
+
+<br>
 
 <br>
 
