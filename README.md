@@ -88,7 +88,7 @@ python3 -m venv venv
 ```
 Crear un entorno virtual llamado venv pero le dice a ***venv*** que, además de los paquetes que instales en tu entorno virtual, también tenga acceso a los paquetes instalados globalmente en tu sistema Python.
 ```bash
-python3 -m venv --system-site-packages art-python-new 
+python3 -m venv --system-site-packages venv
 ```
 
 
