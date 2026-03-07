@@ -15,6 +15,7 @@
   - [Comandos Importantes](#comandos-importantes)
   - [Usar el entorno virtual sin activarlo](#usar-el-entorno-virtual-sin-activarlo)
   - [Removing virtual environments](#removing-virtual-environments)
+  - [¿Qué pasa si NO usas un entorno virtual? (Instalación Global)](#qué-pasa-si-no-usas-un-entorno-virtual-instalación-global)
 - [Installing Libraries via a Requirements File](#installing-libraries-via-a-requirements-file)
   - [Crear  requirements.txt de un entorno virtual](#crear--requirementstxt-de-un-entorno-virtual)
   - [Checking Environment Integrity](#checking-environment-integrity)
@@ -109,12 +110,27 @@ venv\Scripts\activate
 .\venv\Scripts\Activate.ps1
 ```
 
-> :memo: **Note:** Cuando se activa un entorno virtual, solo te activa el terminal actual, si se abre otro terminal se debera activar ese nuevo entorno en ese terminal.
+> :memo: **Note:** <br>
+> * Cuando se activa un entorno virtual, solo te activa el terminal actual, si se abre otro terminal se debera activar ese nuevo entorno en ese terminal. <br>
+> * Si la ruta contiene espacios, asegúrate de encerrarla entre comillas, por ejemplo: 
+source "C:/Mis Proyectos/App/venv/Scripts/activate" <br>
+> * Si el entorno está activado las librerias se instalan exclusivamente en el entorno virtual sin entrar a la carpeta del entorno virtual.
+Esa es precisamente la magia del venv: una vez activado, el comando pip se "redirige" para depositar los archivos dentro de la carpeta de tu entorno (ej. env/lib/site-packages) en lugar de en la carpeta raíz de Python de tu sistema.<br>
+Se pueden usar rutas absolutas: "source C:/ruta/al/proyecto/venv/Scripts/activate" o "source D:/Desarrollo/MiApp/venv/Scripts/activate"
+
+> :warning: **Warning:** Los ambientes virtuales no se pueden copiar de una maquina a otra, porque los scripts dentro de "venv/Scripts" o "venv/bin" tienen rutas absolutas al Python con el que se creó.
 
 
 ##  Comandos Importantes
+
 ```bash
-which python # para saber a que carpeta virtual apunta el python
+echo $VIRTUAL_ENV # devuelve la ruta del entorno virtual. Si no devuelve nada (línea en blanco) significa que no hay ningún entorno virtual activo
+
+echo $env:VIRTUAL_ENV # PowerShell
+```
+
+```bash
+which python # devuelve la ruta exacta del archivo ejecutable de Python
 ```
 
 ## Usar el entorno virtual sin activarlo
@@ -144,6 +160,14 @@ pi@raspberrypi:~ $ sudo /home/pi/blinka/bin/python3 /home/pi/neopix_spinner.py
 ```bash
 rm -rf (env-name)
 ```
+
+## ¿Qué pasa si NO usas un entorno virtual? (Instalación Global)
+Si instalas las librerías directamente en tu terminal sin activar un venv, se instalan a nivel global en tu sistema operativo.
+
+* ```Riesgo de conflictos```: Si el Proyecto A necesita la versión 1.0 de una librería y el Proyecto B necesita la 2.0, no podrás tener ambas instaladas globalmente sin que una rompa a la otra.
+* 
+* ```Desorden```: Tu instalación principal de Python se llena de paquetes que quizás solo usaste una vez, dificultando la limpieza o el traslado de tus proyectos a otra computadora.
+* 
 <br>
 
 # Installing Libraries via a Requirements File
