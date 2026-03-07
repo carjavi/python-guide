@@ -112,11 +112,11 @@ venv\Scripts\activate
 
 > :memo: **Note:** <br>
 > * Cuando se activa un entorno virtual, solo te activa el terminal actual, si se abre otro terminal se debera activar ese nuevo entorno en ese terminal. <br>
-> * Si la ruta contiene espacios, asegúrate de encerrarla entre comillas, por ejemplo: 
+> * Se pueden usar rutas absolutas: "source C:/ruta/al/proyecto/venv/Scripts/activate" o "source D:/Desarrollo/MiApp/venv/Scripts/activate". Si la ruta contiene espacios, asegúrate de encerrarla entre comillas, por ejemplo: 
 source "C:/Mis Proyectos/App/venv/Scripts/activate" <br>
 > * Si el entorno está activado las librerias se instalan exclusivamente en el entorno virtual sin entrar a la carpeta del entorno virtual.
-Esa es precisamente la magia del venv: una vez activado, el comando pip se "redirige" para depositar los archivos dentro de la carpeta de tu entorno (ej. env/lib/site-packages) en lugar de en la carpeta raíz de Python de tu sistema.<br>
-Se pueden usar rutas absolutas: "source C:/ruta/al/proyecto/venv/Scripts/activate" o "source D:/Desarrollo/MiApp/venv/Scripts/activate"
+Esa es precisamente la magia del venv: una vez activado, el comando pip se "redirige" para depositar los archivos dentro de la carpeta de tu entorno (ej. env/lib/site-packages) en lugar de en la carpeta raíz de Python de tu sistema.
+  
 
 > :warning: **Warning:** Los ambientes virtuales no se pueden copiar de una maquina a otra, porque los scripts dentro de "venv/Scripts" o "venv/bin" tienen rutas absolutas al Python con el que se creó.
 
