@@ -38,6 +38,17 @@
   - [Acceso directo con nombre e icono](#acceso-directo-con-nombre-e-icono)
   - [Incluyendo archivos de datos](#incluyendo-archivos-de-datos)
     - [Samples aditional](#samples-aditional)
+- [Mini CONDA](#mini-conda)
+    - [Minicoda para entornos con distintas versiones de Python](#minicoda-para-entornos-con-distintas-versiones-de-python)
+  - [Miniconda installer for Windows](#miniconda-installer-for-windows)
+  - [Miniconda installer for Linux.](#miniconda-installer-for-linux)
+  - [Buscar los path de anaconda (windows)](#buscar-los-path-de-anaconda-windows)
+  - [Testing](#testing)
+  - [Creating environments](#creating-environments)
+    - [Crear entorno en Conda con una version distinta de python](#crear-entorno-en-conda-con-una-version-distinta-de-python)
+  - [Installing packages](#installing-packages)
+  - [Comandos](#comandos)
+  - [Nota Generales:](#nota-generales)
 - [Uso básico de Venv (Entendiendo un poco más!)](#uso-básico-de-venv-entendiendo-un-poco-más)
   - [Crea el entorno virtual](#crea-el-entorno-virtual)
   - [Activa el entorno virtual](#activa-el-entorno-virtual)
@@ -398,6 +409,122 @@ En este comando, 'libs\example.dll;.'se le indica a PyInstaller que lo tome exam
 pyinstaller --onefile --add-binary 'libs/example.so:.' tu_script.py
 ```
 Aquí, 'libs/example.so:.'le indica a PyInstaller que incluya example.so el libs directorio en la raíz de la carpeta ejecutable.
+
+<br>
+
+<br>
+
+# Mini CONDA
+### Minicoda para entornos con distintas versiones de Python
+Miniconda es una herramienta adicional que suma capacidades (como gestionar versiones de Python más fácilmente o librerías que no son solo de Python) sin quitarte lo que ya tienes. Gestionar múltiples versiones de Python con Conda se realiza mediantecreando entornos aisladosCada entorno puede alojar una versión específica de Python sin interferir con la instalación global del sistema ni con otros proyectos. Conda es una potente herramienta de línea de comandos para la gestión de paquetes y entornos que se ejecuta en Windows, macOS y Linux.
+
+## Miniconda installer for Windows
+(desde CMD)
+```bash
+curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe --output .\Miniconda3-latest-Windows-x86_64.exe
+```
+(desde PowerShell)
+```bash
+Invoke-WebRequest -Uri "https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe" -OutFile ".\Miniconda3-latest-Windows-x86_64.exe"
+```
+
+## Miniconda installer for Linux.
+```bash
+curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash ~/Miniconda3-latest-Linux-x86_64.sh
+```
+more information: https://www.anaconda.com/docs/getting-started/miniconda/install/linux-install
+
+## Buscar los path de anaconda (windows)
+```bash
+where conda
+```
+respuesta: 
+```bash
+C:\Users\maqui\miniconda3\Library\bin\conda.bat
+C:\Users\maqui\miniconda3\Scripts\conda.exe <---- ruta a copiar
+C:\Users\maqui\miniconda3\condabin\conda.bat
+```
+```bash
+"C:\Users\maqui\miniconda3\Scripts\conda.exe" init bash
+```
+
+Cierra Git Bash y vuelve a abrirlo
+
+## Testing
+```bash
+conda --version
+```
+
+Ahora deberías ver el nombre del entorno actual ***(normalmente (base))*** al lado del prompt y poder usar comandos como conda list
+
+## Creating environments
+### Crear entorno en Conda con una version distinta de python
+sample:
+```bash
+conda create -n <env-name> python=3.10
+```
+Nota: despues de creado el entorno se debe activar para despues instalar los paquetes con PIP: 
+```bash
+conda activate <env-name>
+```
+
+## Installing packages
+
+```bash
+# via environment activation
+conda activate myenvironment
+conda install matplotlib
+```
+
+```bash
+# via command line option
+conda install --name <env-name> matplotlib
+pip install <env-name> PyPDF2
+# o directamente en la creacion del entorno 
+conda create --name <env-name> python numpy pandas
+```
+
+## Comandos 
+```bash
+conda info --envs # To see a list of all your environments. The active environment is the one with an asterisk (*).
+conda --version # To see your conda version
+conda update conda # Then update conda to the latest version
+conda init # Initialize conda for shell interaction
+conda activate
+	Windows: activate
+	Linux and macOS: source activate
+conda deactivate
+conda install == pip install
+conda update python # updates to the most recent in the series, so any Python 2.x would update to the latest 2.x and any Python 3.x to the latest 3.x.
+```
+more info : https://docs.conda.io/projects/conda/en/latest/commands/index.html
+
+
+## Nota Generales:
+
+* Cuidado con el PATH: Durante la instalación, se te preguntará si deseas añadir Miniconda a tu variable de entorno PATH.
+
+* Se usa "venv" o "conda" no los 2 al mismo tiempo. cuando se usa PIP en conda los archivos se instalan en un entorno de conda y no en la misma carpeta de trabajo, como el caso de los entornos virtuales generalmente.
+
+* Si lo añades: El comando python llamará por defecto al Python de Miniconda. Para usar tus entornos antiguos, deberás asegurarte de activarlos explícitamente para que su intérprete tome prioridad
+
+* Si no lo añades (recomendado): Tu sistema seguirá usando tu Python original por defecto. Para usar las herramientas de Conda, simplemente tendrás que usar el Anaconda Prompt o inicializarlo manualmente en tu terminal.
+
+* Gestión independiente: Los entornos de Conda y los de venv se guardan en lugares distintos y funcionan de forma aislada. No se mezclan automáticamente, lo que te permite migrar tus proyectos a Conda poco a poco si así lo deseas.
+
+* Uso de pip en Conda: Una vez que crees un entorno en Miniconda, podrás seguir usando pip install dentro de él para instalar paquetes que no estén en los repositorios de Conda
+
+* Para verificar que estamos en el entorno de conda despues de crar el entorno conda con 
+```bash  
+conda create -n <env-name> python=3.10
+# usar:
+    where python   # Windows
+    which python   # Linux/Mac
+    debe apuntar al <name-entorno>
+```
+
+more info: https://docs.conda.io/projects/conda/en/latest/user-guide/index.html
 
 <br>
 
