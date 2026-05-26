@@ -118,7 +118,7 @@ source venv/Scripts/activate
 venv\Scripts\activate
 
 # desde PowerShell
-.\venv\Scripts\Activate.ps1
+set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process && .\venv\Scripts\Activate.ps1
 ```
 
 > :memo: **Note:** <br>
