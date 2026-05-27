@@ -12,7 +12,6 @@
 - [Table of contents](#table-of-contents)
 - [Python Virtual Environment (Windows/Linux)](#python-virtual-environment-windowslinux)
   - [Activar (estando dentro de la carpeta que contiene el venv):](#activar-estando-dentro-de-la-carpeta-que-contiene-el-venv)
-  - [Comandos Importantes](#comandos-importantes)
   - [Usar el entorno virtual sin activarlo](#usar-el-entorno-virtual-sin-activarlo)
   - [Removing virtual environments](#removing-virtual-environments)
   - [¿Qué pasa si NO usas un entorno virtual? (Instalación Global)](#qué-pasa-si-no-usas-un-entorno-virtual-instalación-global)
@@ -118,7 +117,10 @@ source venv/Scripts/activate
 venv\Scripts\activate
 
 # desde PowerShell
-set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process && .\venv\Scripts\Activate.ps1
+# Cambia la política de seguridad de PowerShell. Permite ejecutar scripts locales sin firma y descargados de internet
+```Powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process; .\venv\Scripts\Activate.ps1
+```
 ```
 
 > :memo: **Note:** <br>
